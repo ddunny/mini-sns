@@ -2,6 +2,10 @@ import React from 'react'
 import Head from 'next/head'
 import Nav from '../components/nav'
 
+import firebaseApp from '../firebase/firebaseApp';
+
+console.log(firebaseApp);
+
 const Home = () => (
   <div>
     <Head>
