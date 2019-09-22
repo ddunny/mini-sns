@@ -4,7 +4,7 @@ import Nav from '../components/nav'
 
 import firebaseApp from '../firebase/firebaseApp';
 
-console.log(firebaseApp);
+// console.log(firebaseApp);
 
 const Home = () => (
   <div>

@@ -12,7 +12,7 @@ const koaBody = require('koa-body');
 const api = new Router({ prefix: '/api' });
 
 const firebaseApp = require('./firebase/firebaseApp');
-console.log(firebaseApp);
+// console.log(firebaseApp);
 
 api.get('/', async context => {
     context.body = 'api';
