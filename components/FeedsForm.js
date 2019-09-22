@@ -9,7 +9,7 @@ export default () => {
       content, // == params
     })
       .then(() => {
-        alert('완료되었습니다.'+ content);
+        setContent('');
       })
       .catch(error => {
         console.log(error);
@@ -19,11 +19,10 @@ export default () => {
   }
   return (
     <>
-      <input type="text" />
-      <button
+      <input type="text"
         value={content}
-        onClick={submit}
-        onChange={event => setContent(event.target.value)}>전송</button>
+        onChange={event => setContent(event.target.value)} />
+      <button onClick={submit}>전송</button>
     </>
   )
 };
