@@ -13,6 +13,8 @@ const api = new Router({ prefix: '/api' });
 
 const firebaseApp = require('./firebase/firebaseApp');
 // console.log(firebaseApp);
+const db = firebaseApp.firestore();
+const moment = require('moment');
 
 api.get('/', async context => {
     context.body = 'api';
@@ -20,6 +22,26 @@ api.get('/', async context => {
 
 api.get('/ping', async context => {
     context.body = 'pong';
+});
+
+api.get('/feeds', async context => {
+    const result = await db.collection('feeds').get(); // 데이터 전체 가지고 오기 // result => list 형태로 온다
+    const list = [];
+    result.forEach(doc => {
+        list.push({ id: doc.id, ...doc.data() });
+    });
+    context.body = list;
+});
+
+api.post('/feeds', async context => {
+    const content = context.request.body.content; // 리액트에서 넘겨받은 값
+    const now = moment().format('YYYY-MM-DD HH:mm:ss'); // == new Date(); 비슷~~~
+    const doc = await db.collection('feeds').add({ // doc 안에 json으로 변환하지 못하는 값들이 많다.
+        content: content,
+        created_at: now, // 작성시간
+        updated_at: now, // 갱신시간
+    });
+    context.body = doc.id;
 });
 
 app
