@@ -7,7 +7,7 @@
 const firebase = require('firebase/app');
 
 require('firebase/firestore');
-require('firebase/auth');
+require('firebase/auth'); // 인증을 사용하기 위해 필요함
 
 /**
  * initializeApp
