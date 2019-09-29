@@ -4,28 +4,28 @@ import firebaseApp from '../firebase/firebaseApp';
 
 const db = firebaseApp.firestore();
 
-const Feed = () => {
-    const [doc, setDoc] = React.useState({});
-
+const Feed = (props) => {
+    console.log(`Feed props: `, props);
     const router = useRouter();
     console.log('query', router.query);
     const id = router.query.id;
-    React.useEffect(() => { // 서버사이드 렌더링에 반영되지 않는다!
-        db.collection('feeds').doc(id).get().then(doc => {
-            console.log('doc', doc.data());
-            setDoc(doc.data());
-        });
-    }, [])
     return (
         <>
-            {doc.content}
+            {props.data.content}
         </>
     )
 }
 
-Feed.getInitialProps = async context => {
+// 서버사이드 랜더링, SPA 라우팅에도 사용한다.
+// 완전히 새로고침하면 터미널 콘솔에 찍히고, 아니면 프론트쪽 콘솔에 찍힌다.
+// 최초 서버사이드렌더링 때에도 실행되고, 페이지들 이동해서 다닐 때에도 실행된다.
+Feed.getInitialProps = async context => { // 초기화되는 시점에 prop를 만든다는 함수~
     console.table('context', context);
-    return {};
+    const docRef = await db.collection('feeds').doc(context.query.id).get();
+    const data = docRef.data();
+    return {
+        data,
+    };
 }
 
 export default Feed;
