@@ -1,10 +1,11 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import firebaseApp from '../firebase/firebaseApp';
+import { withAppContext } from '../contexts/AppContext';
 
 const db = firebaseApp.firestore();
 
-const Feed = (props) => {
+let Feed = (props) => {
     console.log(`Feed props: `, props);
     const router = useRouter();
     console.log('query', router.query);
@@ -27,5 +28,6 @@ Feed.getInitialProps = async context => { // 초기화되는 시점에 prop를 �
         data,
     };
 }
+Feed = withAppContext( Feed );
 
 export default Feed;

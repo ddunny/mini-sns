@@ -4,6 +4,7 @@ import FeedForm from '../components/FeedsForm';
 import axios from 'axios';
 import firebaseApp from '../firebase/firebaseApp';
 import Link from 'next/link';
+import { withAppContext } from '../contexts/AppContext';
 
 const db = firebaseApp.firestore();
 
@@ -35,9 +36,11 @@ class Feeds extends React.Component {
   }
   render() {
     return <>
-      <div>
-        <FeedForm />
-      </div>
+      {this.props.context.user && (
+        <div>
+          <FeedForm />
+        </div>
+      )}
       <ul>
         {this.state.list.map(item => {
           return (
@@ -66,5 +69,7 @@ Feeds.getInitialProps = async () => { // constructor 보다 한단계 먼저 실
     list: response.data,
   }; // 리턴하는 것은 오브젝트여야 한다. 약속! // 함수의 생성자로 넘어가기 때문에
 };
+
+Feeds = withAppContext(Feeds);
 
 export default Feeds;

@@ -2,6 +2,8 @@ import React from 'react'
 import App from 'next/app'
 import AppContainer from '../components/AppContainer';
 import firebaseApp from '../firebase/firebaseApp';
+import { AppProvider } from '../contexts/AppContext';
+import Link from 'next/link';
 
 class MyApp extends App { // extends : 확장
     /**
@@ -38,11 +40,23 @@ class MyApp extends App { // extends : 확장
     render() {
         const { Component, pageProps } = this.props
         if (this.state.user) {
+
             return <div>
+                <AppProvider>
+                    <div>
+                        <header>
+                            <Link href='/feeds' >
+                            피드목록
+                            </Link>
+                        </header>
+                    </div>
                 <AppContainer>
                     <Component {...pageProps} />
                 </AppContainer>
-            </div>
+                </AppProvider>
+
+
+            </div >
         }
         else {
             return <>
