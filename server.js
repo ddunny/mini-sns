@@ -34,9 +34,13 @@ api.get('/feeds', async context => {
 });
 
 api.post('/feeds', async context => {
+    const displayName = context.request.body.displayName;
+    const avatar = context.request.body.avatar;
     const content = context.request.body.content; // 리액트에서 넘겨받은 값
     const now = moment().format('YYYY-MM-DD HH:mm:ss'); // == new Date(); 비슷~~~
     const doc = await db.collection('feeds').add({ // doc 안에 json으로 변환하지 못하는 값들이 많다.
+        displayName,
+        avatar,
         content: content,
         created_at: now, // 작성시간
         updated_at: now, // 갱신시간

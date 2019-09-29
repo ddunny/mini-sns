@@ -19,7 +19,8 @@ export default class MyDocument extends Document {
         <body>
           <div id="root">
             <Main />
-            <NextScript />
+            <NextScript /> 
+            {/* NextScript: 동적로드를 위해서 필요하다 */}
           </div>
         </body>
       </html>

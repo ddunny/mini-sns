@@ -1,9 +1,9 @@
 import React from 'react'
 import App from 'next/app'
+import Link from 'next/link';
 import AppContainer from '../components/AppContainer';
 import firebaseApp from '../firebase/firebaseApp';
 import { AppProvider } from '../contexts/AppContext';
-import Link from 'next/link';
 
 class MyApp extends App { // extends : 확장
     /**
@@ -39,20 +39,22 @@ class MyApp extends App { // extends : 확장
 
     render() {
         const { Component, pageProps } = this.props
+
+        return <div>
+            <AppProvider>
+                <AppContainer>
+                    <Component {...pageProps} />
+                </AppContainer>
+            </AppProvider>
+        </div>
+
         if (this.state.user) {
 
             return <div>
                 <AppProvider>
-                    <div>
-                        <header>
-                            <Link href='/feeds' >
-                            피드목록
-                            </Link>
-                        </header>
-                    </div>
-                <AppContainer>
-                    <Component {...pageProps} />
-                </AppContainer>
+                    <AppContainer>
+                        <Component {...pageProps} />
+                    </AppContainer>
                 </AppProvider>
 
 
@@ -64,37 +66,6 @@ class MyApp extends App { // extends : 확장
             </>
         }
 
-    }
-
-    componentDidMount() { // 로그인 전, 후에 대한 처리를 여기서 진행합니다.
-        firebaseApp.auth().getRedirectResult().then(function (result) {
-            if (result.credential) {
-                // This gives you a Google Access Token.
-                var token = result.credential.accessToken;
-            }
-            var user = result.user;
-            console.log('getRedirectResult', user);
-        });
-        firebaseApp.auth().onAuthStateChanged((user) => {
-            if (user) {
-                // User is signed in.
-                var isAnonymous = user.isAnonymous;
-                var uid = user.uid;
-                // ...
-                if (user.providerData.length) {
-                    console.log('user', user);
-                }
-                else {
-                    console.log('anonymous user', user);
-                    this.setState({ user });
-                }
-            } else {
-                // User is signed out.
-                // ...
-            }
-            // ...
-        });
-        firebaseApp.auth().signInAnonymously();
     }
 }
 
