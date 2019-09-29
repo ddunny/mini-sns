@@ -1,5 +1,5 @@
 import React from 'react';
-import firebase from 'firebase';
+import firebase from 'firebase'; // 통으로 로드해서 강사님 워닝발생
 import firebaseApp from '../firebase/firebaseApp';
 
 export default () => {
