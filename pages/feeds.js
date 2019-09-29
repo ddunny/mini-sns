@@ -43,7 +43,7 @@ class Feeds extends React.Component {
           return (
             <li key={item.id}>
               <p>
-                <Link href={'/feed'} as={'/feed/' + item.id}>
+                <Link href={'/feed?id=' + item.id} as={'/feed/' + item.id}>
                   <a>{item.content}</a>
                 </Link>
                 <br />

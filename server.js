@@ -50,6 +50,18 @@ app
         const server = new Koa();
         const router = new Router();
 
+        router.get('/feed/:id', async context => {
+            // context.body = '(server) Feed';
+            /**
+             * http://localhost:3000/feed/G39Plzuy9sqJZevdN7M3 로 바로 들어가면 화면에 이게 뜬다.
+             */
+            /**
+             * 아래 두줄을 가지고 모두 프론트에서 접근가능하도록 만들 수 있다.
+             */
+            app.render(context.req, context.res, '/feed', { id: context.params.id });
+            context.respond = false; // ? 뜻이 뭐라고,,?
+        })
+
         router.get('*', async context => {
             await handle(context.req, context.res);
             context.respond = false;
